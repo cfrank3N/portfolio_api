@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PortfolioApi.DbContexts;
 using PortfolioApi.Services;
@@ -10,6 +11,11 @@ builder.Services.AddDbContextPool<MessageContext>(opt =>
 
 // Scope services
 builder.Services.AddScoped<MessageService>();
+
+// Disables ASP.NET's automatic 400 response for validation failures on models/entities
+// Lets me handle them by creating a custom Filter that inherits ActionFilterAttribute
+builder.Services.Configure<ApiBehaviorOptions>(opt =>
+    opt.SuppressModelStateInvalidFilter = true);
 
 // Use controllers
 builder.Services.AddControllers();
