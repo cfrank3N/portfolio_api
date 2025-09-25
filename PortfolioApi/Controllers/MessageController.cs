@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PortfolioApi.CustomFilters;
 using PortfolioApi.Entities;
+using PortfolioApi.Interfaces;
 using PortfolioApi.Services;
 
 namespace PortfolioApi.Controllers
@@ -11,11 +12,13 @@ namespace PortfolioApi.Controllers
     public class MessageController : ControllerBase
     {
 
-        private readonly MessageService _service;
+        private readonly IMessageService _service;
+        private readonly IEmailService _emailService;
 
-        public MessageController(MessageService service)
+        public MessageController(IMessageService service, IEmailService emailService)
         {
             _service = service;
+            _emailService = emailService;
         }
 
         [HttpPost("savemessage")]
@@ -23,8 +26,15 @@ namespace PortfolioApi.Controllers
         {
             var result = await _service.SaveMessage(message);
 
-            return result.Successful ? CreatedAtAction(null, null, message) : BadRequest(result.Message);
+            if (result.Successful)
+            {
+                _emailService.SendEmail(message);
+                return CreatedAtAction(null, null, message);
+            }
+            else
+            {
+                return BadRequest(result.Message);
+            }
         }
-
     }
 }

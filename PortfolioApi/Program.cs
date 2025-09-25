@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PortfolioApi.DbContexts;
+using PortfolioApi.Interfaces;
 using PortfolioApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,7 +11,8 @@ builder.Services.AddDbContextPool<MessageContext>(opt =>
     opt.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Scope services
-builder.Services.AddScoped<MessageService>();
+builder.Services.AddScoped<IMessageService, MessageService>();
+builder.Services.AddScoped<IEmailService,  EmailService>();
 
 // Disables ASP.NET's automatic 400 response for validation failures on models/entities
 // Lets me handle them by creating a custom Filter that inherits ActionFilterAttribute
