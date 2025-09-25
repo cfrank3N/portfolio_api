@@ -3,8 +3,8 @@
     public class Message
     {
         public int Id { get; set; }
-        public string senderName { get; set; }
-        public string senderEmail { get; set; }
-        public string content { get; set; }
+        public string SenderName { get; set; }
+        public string SenderEmail { get; set; }
+        public string Content { get; set; }
     }
 }
