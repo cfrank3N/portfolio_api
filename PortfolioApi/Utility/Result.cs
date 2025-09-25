@@ -8,8 +8,8 @@
         // Needs to be generic because we need to send lists and single objects etc.
         public T? Data { get; set; }
 
-        public static Result<T> Success(T data, string message) => new Result<T> { Successful = true, Data = data, Message = message };
-        public static Result<T> Failure(string message) => new Result<T> { Successful = false, Message = message };
+        public static Result<T> Success(T data, string message) => new Result<T>() { Successful = true, Data = data, Message = message };
+        public static Result<T> Failure(string message) => new Result<T>() { Successful = false, Message = message };
 
     }
 }

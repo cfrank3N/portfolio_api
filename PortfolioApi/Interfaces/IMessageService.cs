@@ -1,4 +1,5 @@
 ﻿using PortfolioApi.Entities;
+using PortfolioApi.Utility;
 
 namespace PortfolioApi.Interfaces
 {
