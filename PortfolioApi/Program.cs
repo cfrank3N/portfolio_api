@@ -1,6 +1,13 @@
+using Microsoft.EntityFrameworkCore;
+using PortfolioApi.DbContexts;
+
 var builder = WebApplication.CreateBuilder(args);
 
-//Use controllers
+// Configure database connection
+builder.Services.AddDbContextPool<MessageContext>(opt =>
+    opt.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// Use controllers
 builder.Services.AddControllers();
 
 var app = builder.Build();
