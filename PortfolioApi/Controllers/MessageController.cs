@@ -22,11 +22,7 @@ namespace PortfolioApi.Controllers
         {
             var result = await _service.SaveMessage(message);
 
-            if (!result.Successful)
-            {
-                return BadRequest(result.Message);
-            }
-            return CreatedAtAction(null, null, message);
+            return result.Successful ? CreatedAtAction(null, null, message) : BadRequest(result.Message);
         }
 
     }
