@@ -13,10 +13,12 @@ namespace PortfolioApi.Controllers
     {
 
         private readonly IMessageService _service;
+        private readonly IEmailService _emailService;
 
-        public MessageController(IMessageService service)
+        public MessageController(IMessageService service, IEmailService emailService)
         {
             _service = service;
+            _emailService = emailService;
         }
 
         [HttpPost("savemessage")]
@@ -24,8 +26,15 @@ namespace PortfolioApi.Controllers
         {
             var result = await _service.SaveMessage(message);
 
-            return result.Successful ? CreatedAtAction(null, null, message) : BadRequest(result.Message);
+            if (result.Successful)
+            {
+                _emailService.SendEmail(message);
+                return CreatedAtAction(null, null, message);
+            }
+            else
+            {
+                return BadRequest(result.Message);
+            }
         }
-
     }
 }

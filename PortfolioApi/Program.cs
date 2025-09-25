@@ -12,6 +12,7 @@ builder.Services.AddDbContextPool<MessageContext>(opt =>
 
 // Scope services
 builder.Services.AddScoped<IMessageService, MessageService>();
+builder.Services.AddScoped<IEmailService,  EmailService>();
 
 // Disables ASP.NET's automatic 400 response for validation failures on models/entities
 // Lets me handle them by creating a custom Filter that inherits ActionFilterAttribute
