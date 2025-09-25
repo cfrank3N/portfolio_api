@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using PortfolioApi.CustomFilters;
 using PortfolioApi.Entities;
 using PortfolioApi.Services;
 
@@ -7,6 +7,7 @@ namespace PortfolioApi.Controllers
 {
     [Route("/api")]
     [ApiController]
+    [MyCustomActionFilter]
     public class MessageController : ControllerBase
     {
 

@@ -16,10 +16,7 @@ namespace PortfolioApi.Services
 
         public async Task<Result<Message>> SaveMessage(Message message)
         {
-            if (message == null)
-            {
-                return Result<Message>.Failure("Message can't be null");
-            }
+            
             try
             {
                 _context.Messages.Add(message);
@@ -28,10 +25,10 @@ namespace PortfolioApi.Services
             }
             catch (Exception ex)
             {
+                // Should log this in the future
                 Console.WriteLine(ex.ToString());
                 return Result<Message>.Failure("Error. All fields must be filled out");
             }
-                
                 
         }
     }
