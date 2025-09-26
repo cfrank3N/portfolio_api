@@ -31,3 +31,6 @@ app.MapControllers();
 
 app.Run();
 
+// Expose Program.cs to the test project to be able to test the app
+public partial class Program { };
+
