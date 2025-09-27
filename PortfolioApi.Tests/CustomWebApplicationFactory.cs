@@ -14,8 +14,8 @@ using Testcontainers.PostgreSql;
 
 namespace PortfolioApi.Tests
 {
-    public class CustomWebApplicationFactory<TProgram> : 
-        WebApplicationFactory<TProgram> where TProgram : class, IAsyncLifetime
+    public class CustomWebApplicationFactory : 
+        WebApplicationFactory<Program>, IAsyncLifetime
     {
         private readonly PostgreSqlContainer _dbContainer = new PostgreSqlBuilder()
             .WithImage("postgres:latest")
@@ -28,21 +28,26 @@ namespace PortfolioApi.Tests
         {
             builder.ConfigureTestServices(services =>
             {
-                var dbDescriptor = services.SingleOrDefault(d => 
-                d.ServiceType == typeof(IDbContextOptionsConfiguration<MessageContext>));
+                var descriptor = services.SingleOrDefault(d => 
+                d.ServiceType == typeof(DbContextOptions<MessageContext>));
 
-                if (dbDescriptor != null)
-                    services.Remove(dbDescriptor);
+                if (descriptor != null)
+                    services.Remove(descriptor);
 
-                services.AddDbContext<MessageContext>(opt =>
+                services.AddDbContextPool<MessageContext>(opt =>
                     opt.UseNpgsql(_dbContainer.GetConnectionString()));
                
             });
         }
 
-        public Task InitializeAsync()
+        public async Task InitializeAsync()
         {
-            return _dbContainer.StartAsync();
+             await _dbContainer.StartAsync();
+
+            using var scope = Services.CreateScope();
+            var context = scope.ServiceProvider.GetRequiredService<MessageContext>();
+
+            await context.Database.MigrateAsync();
         }
 
         public new Task DisposeAsync()
