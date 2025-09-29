@@ -4,7 +4,20 @@ using PortfolioApi.DbContexts;
 using PortfolioApi.Interfaces;
 using PortfolioApi.Services;
 
+string MyAllowSpecificOrigins = "_myAllowedOrigins";
+
 var builder = WebApplication.CreateBuilder(args);
+
+// Configure cors to allow calls from my frontend
+builder.Services.AddCors(options =>
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                        policy =>
+                        {
+                            policy.WithOrigins("https://portfolio-adam-frank.netlify.app")
+                                .AllowAnyHeader()
+                                .AllowAnyMethod();
+                        })
+    );
 
 // Configure database connection
 builder.Services.AddDbContextPool<MessageContext>(opt =>
@@ -27,6 +40,8 @@ var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 app.UseHttpsRedirection();
+
+app.UseCors(MyAllowSpecificOrigins);
 
 app.MapControllers();
 
