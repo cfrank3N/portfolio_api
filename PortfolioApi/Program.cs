@@ -13,7 +13,8 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: MyAllowSpecificOrigins,
                         policy =>
                         {
-                            policy.WithOrigins("https://portfolio-adam-frank.netlify.app")
+                            policy.WithOrigins("https://portfolio-adam-frank.netlify.app",
+                                               "http://localhost:5173")
                                 .AllowAnyHeader()
                                 .AllowAnyMethod();
                         })
