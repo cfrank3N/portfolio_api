@@ -3,6 +3,7 @@ using Octokit.GraphQL.Core;
 using Octokit.GraphQL.Model;
 using PortfolioApi.Interfaces;
 using PortfolioApi.Models;
+using PortfolioApi.Utility;
 using static Octokit.GraphQL.Variable;
 
 namespace PortfolioApi.Services
@@ -19,7 +20,7 @@ namespace PortfolioApi.Services
                 _configuration["ApiKeys:GitHubToken"]);
         }
 
-        public async Task<List<GitHubRepo>> GetPinnedRepos()
+        public async Task<Result<List<GitHubRepo>>> GetPinnedRepos()
         {
             // Create a new query and create GitHubRepo objects to return as list
             
@@ -38,7 +39,15 @@ namespace PortfolioApi.Services
 
             var result = await _connection.Run(query);
 
-            return result.ToList();
+            try
+            {
+                var listOfRepos = result.ToList();
+                return Result<List<GitHubRepo>>.Success(listOfRepos, "successfully fetched repos");
+            }
+            catch (ArgumentNullException e)
+            {
+                return Result<List<GitHubRepo>>.Failure("No repos available to fetch");
+            }
         }
     }
 }

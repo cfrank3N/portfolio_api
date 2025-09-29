@@ -1,9 +1,10 @@
 ﻿using PortfolioApi.Models;
+using PortfolioApi.Utility;
 
 namespace PortfolioApi.Interfaces
 {
     public interface IGitHubService
     {
-        Task<List<GitHubRepo>> GetPinnedRepos();
+        Task<Result<List<GitHubRepo>>> GetPinnedRepos();
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using PortfolioApi.Interfaces;
 using PortfolioApi.Models;
@@ -18,9 +19,16 @@ namespace PortfolioApi.Controllers
         }
 
         [HttpGet("pinned", Name = "PinnedRepos")]
-        public async Task<List<GitHubRepo>> GetPinnedRepos()
+        public async Task<ActionResult<List<GitHubRepo>>> GetPinnedRepos()
         {
-            return await _gitHubService.GetPinnedRepos();
+            var result = await _gitHubService.GetPinnedRepos();
+
+            if (result.Successful)
+            {
+                return Ok(result.Data);
+            }
+            
+            return StatusCode(500, result.Message);
         }
     }
 }
