@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PortfolioApi.Interfaces;
 using PortfolioApi.Models;
 using PortfolioApi.Services;
 
@@ -10,8 +11,8 @@ namespace PortfolioApi.Controllers
     public class GitHubController : ControllerBase
     {
 
-        private readonly GitHubService _gitHubService;
-        public GitHubController(GitHubService gitHubService)
+        private readonly IGitHubService _gitHubService;
+        public GitHubController(IGitHubService gitHubService)
         {
             _gitHubService = gitHubService;
         }

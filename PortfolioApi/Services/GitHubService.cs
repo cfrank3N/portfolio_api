@@ -1,12 +1,13 @@
 ﻿using Octokit.GraphQL;
 using Octokit.GraphQL.Core;
 using Octokit.GraphQL.Model;
+using PortfolioApi.Interfaces;
 using PortfolioApi.Models;
 using static Octokit.GraphQL.Variable;
 
 namespace PortfolioApi.Services
 {
-    public class GitHubService
+    public class GitHubService : IGitHubService
     {
         private readonly IConfiguration _configuration;
         private readonly Connection _connection;
@@ -20,8 +21,7 @@ namespace PortfolioApi.Services
 
         public async Task<List<GitHubRepo>> GetPinnedRepos()
         {
-            // Create a new query and instantiate
-            // a list of objects of type Repository
+            // Create a new query and create GitHubRepo objects to return as list
             
             var query = new Query()
                .User("cfrank3N")
