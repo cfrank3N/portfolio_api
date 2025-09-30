@@ -22,8 +22,10 @@ namespace PortfolioApi.Tests
         [Fact]
         public async Task GetPinnedReposShouldNotBeEmptyTest()
         {
+            // Arrange, Act
             var result = await _service.GetPinnedRepos();
 
+            // Assert
             Assert.NotNull(result.Data);
             Assert.True(result.Data.Count > 0);
         }
