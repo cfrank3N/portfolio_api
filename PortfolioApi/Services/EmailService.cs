@@ -22,7 +22,7 @@ namespace PortfolioApi.Services
             var recipientName = _configuraion["EmailList:RecipientName"];
 
             //Saves my Brevo account details to the Brevo API config to be able to send emails from my account
-            brevo_csharp.Client.Configuration.Default.ApiKey.Add("api-key", apiKey);
+            brevo_csharp.Client.Configuration.Default.ApiKey.TryAdd("api-key", apiKey);
 
             var apiInstance = new TransactionalEmailsApi();
             var sendSmtpEmail = new SendSmtpEmail(); // SendSmtpEmail | Values to send a transactional email
