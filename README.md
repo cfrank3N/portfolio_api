@@ -1,6 +1,6 @@
 # Portfolio API
 
-[![Build Status](https://img.shields.io/github/actions/workflow/status/cfrank3N/portfolio_api/ci.yml)](https://github.com/cfrank3N/portfolio_api/actions)  
+[![Build Status](https://img.shields.io/github/actions/workflow/status/cfrank3N/portfolio_api/.github/workflows/azure-webapps-dotnet-core.yml)](https://github.com/cfrank3N/portfolio_api/actions)  
 ![Last Commit](https://img.shields.io/github/last-commit/cfrank3N/portfolio_api)
 
 Backend API in **ASP.NET Core** for my portfolio project.
@@ -199,3 +199,4 @@ Contributions, issues, and feature requests are welcome.
 - [ASP.NET Core Documentation](https://learn.microsoft.com/aspnet/core)
 - [Entity Framework Core](https://learn.microsoft.com/ef/core)
 - [Azure App Service](https://azure.microsoft.com/services/app-service/)
+
